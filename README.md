@@ -2,7 +2,7 @@
 
 # ConnectMe 📡
 
-**A fast, private, and lightweight Android companion app built for campus Wi-Fi auto-login at CE-46.**
+**A fast, private, and lightweight Android companion app built for campus Wi-Fi auto-login from CE-46.**
 
 [![License: GPL-3.0](https://img.shields.io/badge/License-GPL--3.0-blue.svg)](LICENSE)
 [![Kotlin](https://img.shields.io/badge/Kotlin-100%25-7F52FF.svg?logo=kotlin&logoColor=white)](https://kotlinlang.org)
@@ -36,11 +36,6 @@
 
 - [Overview](#overview)
 - [Screenshots](#screenshots)
-- [Technical Architecture & Stack](#technical-architecture--stack)
-  - [Core Stack](#core-stack)
-  - [Networking & Captive Handshake](#networking--captive-handshake)
-  - [Persistence & Cryptography](#persistence--cryptography)
-  - [UI & Typography](#ui--typography)
 - [Distinctive Features Under the Hood](#distinctive-features-under-the-hood)
 - [Features](#features)
 - [Installation & Setup](#installation--setup)
@@ -49,7 +44,6 @@
 - [Support the Project (☕ Buy Chai)](#support-the-project--buy-chai)
 - [Contributors](#contributors)
 - [Special Thanks](#special-thanks)
-- [Legal Disclaimer & Terms of Use](#legal-disclaimer--terms-of-use)
 
 ---
 
@@ -65,79 +59,12 @@
 
 ---
 
-## Technical Architecture & Stack
-
-ConnectMe is built following **Modern Android Architecture (MVVM + Jetpack Compose + Clean Architecture)** with an emphasis on low resource footprint, offline privacy, and zero background battery drain.
-
-```
-app/src/main/java/com/ce46/connectme/
-├── ConnectMeApp.kt              # App entry point & dependency graph initialization
-├── MainActivity.kt              # Edge-to-edge Compose root & navigation
-├── data/
-│   ├── CredentialStore.kt       # Hardware-backed AES-256-GCM encryption via Android Keystore
-│   ├── PortalLoginClient.kt     # Network-bound OkHttp client for captive portal handshakes
-│   ├── SettingsStore.kt         # Type-safe preference storage (theming, auto-login)
-│   ├── ActivityLogStore.kt      # Monospace event log memory & persistence
-│   ├── UpdateChecker.kt         # Lightweight version manifest checker
-│   └── Models.kt                # Immutable data classes and domain state models
-├── di/
-│   └── AppContainer.kt          # Clean, zero-reflection manual dependency injection
-├── service/
-│   ├── CaptivePortalService.kt  # Android Foreground Service with ConnectivityManager callbacks
-│   ├── AutoLoginTileService.kt  # Quick Settings Tile Service in Android notification shade
-│   ├── BootReceiver.kt          # Automatically resumes service on device boot if enabled
-│   └── SuggestionReceiver.kt    # Wi-Fi network suggestion callback handling
-├── wifi/
-│   └── WifiRepository.kt        # Wi-Fi panel trigger & network connectivity queries
-└── ui/
-    ├── mascot/
-    │   └── CeeMascot.kt         # Pure vector Canvas-rendered mascot with emotional reactions
-    ├── nav/
-    │   └── SlidingBottomBar.kt  # Spring-animated sliding pill bottom navigation bar
-    ├── wifi/
-    │   ├── WifiScreen.kt        # Clean Wi-Fi connection trigger & status screen
-    │   └── WifiViewModel.kt     # State management & Wi-Fi panel invocation
-    ├── status/
-    │   ├── StatusScreen.kt      # Mascot dialogue & scroll-bounded activity logs
-    │   └── StatusViewModel.kt   # Live portal status and log clear actions
-    ├── settings/
-    │   ├── SettingsScreen.kt    # AOSP grouped settings, credential manager & Buy Chai dialog
-    │   └── SettingsViewModel.kt # Preferences presentation logic
-    └── theme/
-        ├── Color.kt             # Curated dynamic palette definitions
-        ├── Theme.kt             # MaterialTheme setup with dynamic color
-        └── Type.kt              # Google Sans typography system
-```
-
-### Core Stack
-- **Kotlin**: 100% Kotlin codebase utilizing Coroutines and `StateFlow` for asynchronous reactive streams.
-- **UI Framework**: **Jetpack Compose (Material 3)** with custom animated surface transitions and spring-physics bottom bar navigation.
-- **Architecture**: **MVVM + Clean Architecture**. Business logic is strictly isolated from UI, and UI state is hoisted as immutable state.
-- **Dependency Injection**: Lightweight, compile-time verified manual container (`AppContainer`) — eliminating reflection overhead and speeding up cold starts.
-
-### Networking & Captive Handshake
-- **OkHttp 4**: Lightweight HTTP engine configured with strict timeouts and custom DNS resolvers.
-- **Socket & Network Binding**: Uses `network.socketFactory` and `network.getAllByName` to bind directly to the Wi-Fi `Network` object. Captive portal requests bypass cellular data routes completely, preventing false positives and data leaks.
-
-### Persistence & Cryptography
-- **Android Keystore**: Master AES-256 keys are generated and stored inside the device's secure hardware chip (TEE / StrongBox). Keys cannot be exported, extracted, or viewed.
-- **Zero Plaintext Fallback**: Passwords and credentials never touch unencrypted files.
-- **Backup & Transfer Exclusion**: Explicitly guarded via `backup_rules.xml` and `data_extraction_rules.xml` to prevent credentials from being synced to cloud backups or extracted via ADB.
-
-### UI & Typography
-- **Google Sans Typography**: Bundled offline Google Sans (`Regular`, `Medium`, `Bold`) for a sleek, cohesive Google Pixel-like experience.
-- **Vector Canvas Mascot "Cee"**: Entirely drawn on an interactive Compose Canvas with dynamic facial expressions, speech bubbles, and mood states based on portal status.
-- **Dynamic Theming**: Full Android 12+ Material You Dynamic Color support plus 5 custom accent palettes (**Mint**, **Sky**, **Coral**, **Grape**, **Sunset**) and System/Light/Dark modes.
-
----
-
 ## Distinctive Features Under the Hood
 
 - **Sub-Second Fortinet Authentication**: Parses the `fgtauth` challenge token on the fly and posts encrypted authentication payloads in a single network round-trip.
 - **Network Interface Isolation**: Prevents DNS poisoning or routing interference on dual-SIM / Wi-Fi connected devices.
 - **Native Quick Settings Tile**: Direct access to toggle auto-login or view connection status directly from the Android Quick Settings shade.
-- **Ultra-Lean R8 Minification**: Shrunk from **58 MB** down to just **2.59 MB** (~95.3% reduction) by stripping redundant icon sets and applying aggressive dead-code elimination.
-
+- **Ultra-Small Apk**: Just **2.59 MB** 
 ---
 
 ## Features
@@ -235,30 +162,12 @@ Thank you to everyone in the campus community who tested, reported feedback, and
 
 ## Special Thanks
 
-ConnectMe stands on the shoulders of great open-source tools and community guidance. Special appreciation to:
+ConnectMe stands on the shoulders of great open-source tools and One Guy Idea. Special appreciation to:
 
 | Contributor / Project | Contribution / Reference |
 | :--- | :--- |
 | [**Rehan Saqib**](https://github.com/HopzAlot) | Special thanks for guidance, architectural insights, and continuous support |
 | [**Android Open Source Project (AOSP)**](https://source.android.com/) | Material 3 specifications, Quick Settings Tile APIs, and System UI patterns |
-| [**Square OkHttp**](https://square.github.io/okhttp/) | Resilient low-level HTTP client and network-bound socket management |
-| [**Google Sans Typography**](https://fonts.google.com/) | Clean, modern typography designed for comfortable reading |
 
 ---
 
-## Legal Disclaimer & Terms of Use
-
-1. **100% Free, Open-Source & Strictly Non-Commercial**  
-   ConnectMe is a free, open-source software project (FOSS) licensed under the **GNU General Public License v3.0**. It is developed exclusively for educational purposes and personal student convenience. There are no advertisements, paid features, or in-app purchases.
-
-2. **Automated Client for Personal Use**  
-   ConnectMe acts purely as an automated HTTP client replacing repetitive manual browser form submissions. It transmits only the credentials explicitly provided by the user directly to the local campus captive portal.
-
-3. **No Network Interference or Policy Bypass**  
-   ConnectMe does not circumvent network firewalls, decrypt traffic, bypass network bandwidth rules, or tamper with institutional security controls. It strictly automates the standard login form endpoint.
-
-4. **Hardware-Backed Privacy First**  
-   All credentials remain on the user's physical device inside Android Keystore hardware. No data is collected, logged remotely, or transmitted to any third party.
-
-5. **Disclaimer of Warranty**  
-   The software is provided **"AS IS"**, without warranty of any kind. Users are responsible for complying with their institution's acceptable use policies.
