@@ -91,7 +91,7 @@
 
 ### Android Installation
 
-1. Download the latest pre-compiled release APK from the root of this repository or from the [Releases Page](https://github.com):
+1. Download the latest pre-compiled release APK from the root of this repository or from the [Releases Page](https://github.com/azeem-01/ConnectMe/releases/tag/v1.0):
    - **File**: `ConnectMe-v1.0.0.apk` (**2.59 MB**)
 2. Open the downloaded file on your Android device and install (allow *"Install unknown apps"* if prompted).
 3. Open **ConnectMe**, navigate to **Settings**, and save your Student ID and Password.
