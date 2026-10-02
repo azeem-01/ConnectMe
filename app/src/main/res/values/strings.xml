@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ConnectMe</string>
+    <string name="tile_label">Auto login</string>
+    <string name="notification_channel">Campus Wi-Fi login</string>
+    <string name="about_title">About me</string>
+    <string name="about_body">Campus Wi-Fi auto-login for CE-46.</string>
+    <string name="coffee_title">Buy Chai</string>
+    <string name="coffee_body">Scan with Easypaisa or any banking app.</string>
+    <string name="update_unconfigured">You are on the latest build.</string>
+</resources>
